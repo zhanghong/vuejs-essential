@@ -12,7 +12,18 @@
           <span class="caret"></span>
         </a>
         <ul class="dropdown-menu">
-          <li><a href="javascript:;" @click="logout"><i class="fa fa-sign-out text-md"></i>退出</a></li>
+          <!-- 编辑资料 -->
+          <li>
+            <router-link to="/users/1/edit">
+              <i class="fa fa-cog text-md i-middle"></i>
+              编辑资料
+            </router-link>
+          </li>
+          <li>
+            <a href="javascript:;" @click="logout">
+              <i class="fa fa-sign-out text-md"></i>退出
+            </a>
+          </li>
         </ul>
       </li>
     </ul>
