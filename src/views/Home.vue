@@ -31,6 +31,11 @@ export default {
             // 显示注册成功
             vm.showMsg('注册成功')
             break
+          // 已登录时，从登录页面跳转过来
+          case 'login':
+            // 显示登录成功
+            vm.showMsg('登录成功')
+            break
         }
       } else if (logout) {
         // logout 返回 true 时，显示操作成功提示
