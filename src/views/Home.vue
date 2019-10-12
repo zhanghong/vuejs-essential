@@ -38,6 +38,10 @@
           </ul>
         </div>
 
+        <!-- 分页组件 -->
+        <div class="panel-footer text-right remove-padding-horizontal pager-footer">
+          <Pagination :currentPage="currentPage" :total="total" :pageSize="pageSize" :onPageChange="changePage" />
+        </div>
       </div>
     </div>
 
@@ -63,6 +67,8 @@ export default {
         { filter: 'recent', name: '最近', title: '发布时间排序'},
         { filter: 'noreply', name: '零回复', title: '无人问津的话题'}
       ],
+      total: 0,
+      pageSize: 10,
     }
   },
   // 组件内的路由导航守卫
@@ -101,7 +107,11 @@ export default {
     ...mapState([
       'auth',
       'user',
-    ])
+    ]),
+    // 当前页，从查询参数 page 返回
+    currentPage() {
+      return parseInt(this.$route.query.page) || 1
+    }
   },
   watch: {
     // 监听 auth，它的值变为 false 时，显示操作成功提示
@@ -123,10 +133,23 @@ export default {
     },
     // 设置相关数据
     setDataByFilter(filter = 'default') {
-      // 设置当前过滤方式为查询参数的 filter
+      // 每页条数
+      const pageSize = this.pageSize
+      // 当前页
+      const currentPage = this.currentPage
+      // 过滤后的所有文章
+      const allArticles = this.$store.getters.getArticlesByFilter(filter)
+
       this.filter = filter
-      // 设置文章列表为过滤后的所有文章
-      this.articles = this.$store.getters.getArticlesByFilter(filter)
+      // 文章总数
+      this.total = allArticles.length
+      // 当前页的文章
+      this.articles = allArticles.slice(pageSize * (currentPage - 1), pageSize * currentPage)
+    },
+    changePage(page) {
+      // 在查询参数中混入 page，并跳转到该地址
+      // 混入部分等价于 Object.assign({}, this.$route.query, { page: page })
+      this.$router.push({ query: { ...this.$route.query, page } })
     }
   }
 }
