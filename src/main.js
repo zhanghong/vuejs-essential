@@ -15,6 +15,11 @@ import Message from './plugins/message'
 import './filters'
 import { mockArticles } from './mock/data'
 import ls from './utils/localStorage'
+import './mock'
+import axios from 'axios'
+
+// 将 axios 添加到 Vue.prototype 上，使其在实例内部的所有组件中可用
+Vue.prototype.$axios = axios
 
 // 使用插件
 Vue.use(VueSweetalert2)
