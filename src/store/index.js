@@ -15,7 +15,8 @@ const state = {
   auth: ls.getItem('auth'),
   // 所有文章状态
   articles: ls.getItem('articles'),
-  searchValue: ''
+  searchValue: '',
+  origin: location.origin
 }
 
 const mutations = {
